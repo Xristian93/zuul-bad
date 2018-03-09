@@ -84,21 +84,7 @@ public class Game
         System.out.println("Bienvenido al edificio de tu nuevo trabajo, ¿Preparado para dar caza a tu victima?");
         System.out.println("Escribe 'help' si necesitas ayuda");
         System.out.println();
-        System.out.println("Estas en " + currentRoom.getDescription());
-        System.out.print("Salidas: ");
-        if(currentRoom.northExit != null) {
-            System.out.print("north ");
-        }
-        if(currentRoom.eastExit != null) {
-            System.out.print("east ");
-        }
-        if(currentRoom.southExit != null) {
-            System.out.print("south ");
-        }
-        if(currentRoom.westExit != null) {
-            System.out.print("west ");
-        }
-        System.out.println();
+        printLocationInfo();
     }
 
     /**
@@ -179,26 +165,7 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
-            System.out.println("Estas en " + currentRoom.getDescription());
-            if (currentRoom.getDescription().equals("La terraza exterior, esta lloviendo")){
-                System.out.println("Has encontrado y asesinado a tu victima. Felicidades!!");
-            }
-            else{
-                System.out.print("Exits: ");
-                if(currentRoom.northExit != null) {
-                    System.out.print("north ");
-                }
-                if(currentRoom.eastExit != null) {
-                    System.out.print("east ");
-                }
-                if(currentRoom.southExit != null) {
-                    System.out.print("south ");
-                }
-                if(currentRoom.westExit != null) {
-                    System.out.print("west ");
-                }
-            }
-            System.out.println();
+            printLocationInfo();
         }
     }
 
@@ -216,5 +183,31 @@ public class Game
         else {
             return true;  // signal that we want to quit
         }
+    }
+
+    /**
+     * Print out the location info.
+     */
+    private void printLocationInfo(){
+        System.out.println("Estas en " + currentRoom.getDescription());
+        if (currentRoom.getDescription().equals("La terraza exterior, esta lloviendo")){
+            System.out.println("Has encontrado y asesinado a tu victima. Felicidades!!");
+        }
+        else{
+            System.out.print("Exits: ");
+            if(currentRoom.northExit != null) {
+                System.out.print("north ");
+            }
+            if(currentRoom.eastExit != null) {
+                System.out.print("east ");
+            }
+            if(currentRoom.southExit != null) {
+                System.out.print("south ");
+            }
+            if(currentRoom.westExit != null) {
+                System.out.print("west ");
+            }
+        }
+        System.out.println();
     }
 }
