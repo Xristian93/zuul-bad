@@ -34,7 +34,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room entradaEdificio, salonPrincipal, baños, escaleras, pasillo, dormitorioPrincipal, terraza, bañoDormitorio, sotano;
+        Room entradaEdificio, salonPrincipal, baños, escaleras, pasillo, dormitorioPrincipal, terraza, bañoDormitorio, sotano, trastero, armario;
 
         // create the rooms
         entradaEdificio = new Room("La entrada al viejo edificio");
@@ -46,15 +46,19 @@ public class Game
         terraza = new Room("La terraza exterior, esta lloviendo");
         bañoDormitorio = new Room("El baño del dormitorio");
         sotano = new Room("Un sotano oscuro y sucio");
+        trastero = new Room("Un simple trastero");
+        armario = new Room("Un armario lleno de ropa");
 
         // initialise room exits
-        entradaEdificio.setExits(salonPrincipal, escaleras, null, null, null);
-        salonPrincipal.setExits(null, null, entradaEdificio, baños, null);
-        baños.setExits(null, salonPrincipal, null, null, null);
-        escaleras.setExits(pasillo, null, null, entradaEdificio, sotano);
-        pasillo.setExits(dormitorioPrincipal, null, escaleras, null, null);
-        dormitorioPrincipal.setExits(null, null, pasillo, terraza, bañoDormitorio);
-        terraza.setExits(null, dormitorioPrincipal, null, null, null);
+        entradaEdificio.setExits(salonPrincipal, escaleras, null, null, null, null);
+        salonPrincipal.setExits(null, null, entradaEdificio, baños, null, trastero);
+        baños.setExits(null, salonPrincipal, null, null, null, null);
+        escaleras.setExits(pasillo, null, null, entradaEdificio, sotano, null);
+        pasillo.setExits(dormitorioPrincipal, null, escaleras, null, null, null);
+        dormitorioPrincipal.setExits(null, null, pasillo, terraza, bañoDormitorio, armario);
+        terraza.setExits(null, dormitorioPrincipal, null, null, null, null);
+        trastero.setExits(null, null, null, null, salonPrincipal, null);
+        armario.setExits(null, null, null, null, dormitorioPrincipal, null);
 
         currentRoom = entradaEdificio;  // start game outside
     }
