@@ -19,7 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-        
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -34,23 +34,27 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
-      
-        // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
-        
-        // initialise room exits
-        outside.setExits(null, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
+        Room entradaEdificio, salonPrincipal, baños, escaleras, pasillo, dormitorioPrincipal, terraza;
 
-        currentRoom = outside;  // start game outside
+        // create the rooms
+        entradaEdificio = new Room("La entrada al viejo edificio");
+        salonPrincipal = new Room("Un gran salon, muy espacioso");
+        baños = new Room("Unos simples baños");
+        escaleras = new Room("Las escaleras al segundo piso");
+        pasillo = new Room("Un pasillo que comunica con las habitaciones");
+        dormitorioPrincipal = new Room("Un dormitorio muy grande");
+        terraza = new Room("La terraza exterior, esta lloviendo");
+
+        // initialise room exits
+        entradaEdificio.setExits(salonPrincipal, escaleras, null, null);
+        salonPrincipal.setExits(null, null, entradaEdificio, baños);
+        baños.setExits(null, salonPrincipal, null, null);
+        escaleras.setExits(pasillo, null, null, entradaEdificio);
+        pasillo.setExits(dormitorioPrincipal, null, escaleras, null);
+        dormitorioPrincipal.setExits(null, null, pasillo, terraza);
+        terraza.setExits(null, dormitorioPrincipal, null, null);
+
+        currentRoom = entradaEdificio;  // start game outside
     }
 
     /**
@@ -62,13 +66,13 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
-                
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("Gracias por jugar, hasta otra");
     }
 
     /**
@@ -77,12 +81,11 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println("Type 'help' if you need help.");
+        System.out.println("Bienvenido al edificio de tu nuevo trabajo, ¿Preparado para dar caza a tu victima?");
+        System.out.println("Escribe 'help' si necesitas ayuda");
         System.out.println();
-        System.out.println("You are " + currentRoom.getDescription());
-        System.out.print("Exits: ");
+        System.out.println("Estas en " + currentRoom.getDescription());
+        System.out.print("Salidas: ");
         if(currentRoom.northExit != null) {
             System.out.print("north ");
         }
@@ -135,10 +138,10 @@ public class Game
      */
     private void printHelp() 
     {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("Te has perdido, te estas volviendo loco");
+        System.out.println("Estas dando vueltas por el edificio.");
         System.out.println();
-        System.out.println("Your command words are:");
+        System.out.println("Tus comandos son:");
         System.out.println("   go quit help");
     }
 
@@ -172,23 +175,28 @@ public class Game
         }
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("No hay ninguna puerta!");
         }
         else {
             currentRoom = nextRoom;
-            System.out.println("You are " + currentRoom.getDescription());
-            System.out.print("Exits: ");
-            if(currentRoom.northExit != null) {
-                System.out.print("north ");
+            System.out.println("Estas en " + currentRoom.getDescription());
+            if (currentRoom.getDescription().equals("La terraza exterior, esta lloviendo")){
+                System.out.println("Has encontrado y asesinado a tu victima. Felicidades!!");
             }
-            if(currentRoom.eastExit != null) {
-                System.out.print("east ");
-            }
-            if(currentRoom.southExit != null) {
-                System.out.print("south ");
-            }
-            if(currentRoom.westExit != null) {
-                System.out.print("west ");
+            else{
+                System.out.print("Exits: ");
+                if(currentRoom.northExit != null) {
+                    System.out.print("north ");
+                }
+                if(currentRoom.eastExit != null) {
+                    System.out.print("east ");
+                }
+                if(currentRoom.southExit != null) {
+                    System.out.print("south ");
+                }
+                if(currentRoom.westExit != null) {
+                    System.out.print("west ");
+                }
             }
             System.out.println();
         }
