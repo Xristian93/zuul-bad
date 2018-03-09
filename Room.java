@@ -14,12 +14,12 @@
  */
 public class Room 
 {
-    public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
-    public Room southEastExit;
+    private String description;
+    private Room northExit;
+    private Room southExit;
+    private Room eastExit;
+    private Room westExit;
+    private Room southEastExit;
 
     /**
      * Create a room described "description". Initially, it has
@@ -41,7 +41,7 @@ public class Room
      * @param west The west exit.
      * @param southEast The southEast exit.
      */
-    public void setExits(Room north, Room east, Room south, Room west, Room soutEast) 
+    public void setExits(Room north, Room east, Room south, Room west, Room southEast) 
     {
         if(north != null)
             northExit = north;
@@ -51,8 +51,8 @@ public class Room
             southExit = south;
         if(west != null)
             westExit = west;
-        if(west != null)
-            southEastExit = soutEast;
+        if(southEast != null)
+            southEastExit = southEast;
     }
 
     /**
@@ -63,4 +63,49 @@ public class Room
         return description;
     }
 
+    /**
+     * @param direccion La direccion a comprobar.
+     * @return el objeto de la clase Room asociado a la linea introducida por parametro.
+     */
+    public Room getExit(String direccion)
+    {
+        Room actualRoomExit = null;
+        if(direccion.equals("north"))
+            actualRoomExit = northExit;
+        if(direccion.equals("east"))
+            actualRoomExit = eastExit;
+        if(direccion.equals("south"))
+            actualRoomExit = southExit;
+        if(direccion.equals("west"))
+            actualRoomExit = westExit;
+        if(direccion.equals("southEast"))
+            actualRoomExit = southEastExit;
+        return actualRoomExit;
+    }
+
+    /**
+     * Return a description of the room's exits.
+     * For example: "Exits: north east west"
+     *
+     * @ return A description of the available exits.
+     */
+    public String getExitString(){
+        String exitString = "";
+        if(northExit != null) {
+            exitString += "north ";
+        }
+        if(eastExit != null) {
+            exitString += "east ";
+        }
+        if(southExit != null) {
+            exitString += "south ";
+        }
+        if(westExit != null) {
+            exitString += "west ";
+        }
+        if(southEastExit != null) {
+            exitString += "southEast";
+        }
+        return exitString.trim();
+    }
 }
