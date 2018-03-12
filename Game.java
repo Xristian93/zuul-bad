@@ -50,15 +50,31 @@ public class Game
         armario = new Room("Un armario lleno de ropa");
 
         // initialise room exits
-        entradaEdificio.setExits(salonPrincipal, escaleras, null, null, null, null);
-        salonPrincipal.setExits(null, null, entradaEdificio, baños, null, trastero);
-        baños.setExits(null, salonPrincipal, null, null, null, null);
-        escaleras.setExits(pasillo, null, null, entradaEdificio, sotano, null);
-        pasillo.setExits(dormitorioPrincipal, null, escaleras, null, null, null);
-        dormitorioPrincipal.setExits(null, null, pasillo, terraza, bañoDormitorio, armario);
-        terraza.setExits(null, dormitorioPrincipal, null, null, null, null);
-        trastero.setExits(null, null, null, null, salonPrincipal, null);
-        armario.setExits(null, null, null, null, dormitorioPrincipal, null);
+        entradaEdificio.setExit("north", salonPrincipal);
+        entradaEdificio.setExit("east", escaleras);
+        
+        salonPrincipal.setExit("west", baños);
+        salonPrincipal.setExit("northWest", trastero);
+        salonPrincipal.setExit("south", entradaEdificio);
+        
+        baños.setExit("east", salonPrincipal);
+        
+        trastero.setExit("southEast", salonPrincipal);
+        
+        escaleras.setExit("north", pasillo);
+        escaleras.setExit("west", entradaEdificio);
+        escaleras.setExit("southEast", sotano);
+        
+        pasillo.setExit("north", dormitorioPrincipal);
+        pasillo.setExit("south", escaleras);
+        
+        dormitorioPrincipal.setExit("southEast", bañoDormitorio);
+        dormitorioPrincipal.setExit("west", terraza);
+        dormitorioPrincipal.setExit("northWest", armario);
+        
+        terraza.setExit("east", dormitorioPrincipal);
+        
+        armario.setExit("southEast", dormitorioPrincipal);
 
         currentRoom = entradaEdificio;  // start game outside
     }

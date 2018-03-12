@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Class Room - a room in an adventure game.
@@ -32,29 +33,12 @@ public class Room
     }
 
     /**
-     * Define the exits of this room.  Every direction either leads
-     * to another room or is null (no exit there).
-     * @param north The north exit.
-     * @param east The east east.
-     * @param south The south exit.
-     * @param west The west exit.
-     * @param southEast The southEast exit.
-     * * @param northWest The northWest exit.
+     * Define an exit from this room.
+     * @param direction The direction of the exit.
+     * @param neighbor The room in the given direction.
      */
-    public void setExits(Room north, Room east, Room south, Room west, Room southEast, Room northWest) 
-    {
-        if(north != null)
-            mapaDirecciones.put("north", north);
-        if(east != null)
-            mapaDirecciones.put("east", east);
-        if(south != null)
-            mapaDirecciones.put("south", south);
-        if(west != null)
-            mapaDirecciones.put("west", west);
-        if(southEast != null)
-            mapaDirecciones.put("southEast", southEast);
-        if(northWest != null)
-            mapaDirecciones.put("northWest", northWest);
+    public void setExit(String direction, Room neighbor){
+        mapaDirecciones.put(direction, neighbor);
     }
 
     /**
@@ -71,20 +55,7 @@ public class Room
      */
     public Room getExit(String direccion)
     {
-        Room actualRoomExit = null;
-        if(direccion.equals("north"))
-            actualRoomExit = mapaDirecciones.get("north");
-        if(direccion.equals("east"))
-            actualRoomExit = mapaDirecciones.get("east");
-        if(direccion.equals("south"))
-            actualRoomExit = mapaDirecciones.get("south");
-        if(direccion.equals("west"))
-            actualRoomExit = mapaDirecciones.get("west");
-        if(direccion.equals("southEast"))
-            actualRoomExit = mapaDirecciones.get("southEast");
-        if(direccion.equals("northWest"))
-            actualRoomExit = mapaDirecciones.get("northWest");
-        return actualRoomExit;
+        return mapaDirecciones.get(direccion);
     }
 
     /**
@@ -94,25 +65,13 @@ public class Room
      * @ return A description of the available exits.
      */
     public String getExitString(){
-        String exitString = "";
-        if(mapaDirecciones.get("north") != null) {
-            exitString += "north ";
+        Set<String> direcciones = mapaDirecciones.keySet();
+        String descripcionDirecciones = "Salidas: ";
+        
+        for (String direccionActual : direcciones){
+            descripcionDirecciones += direccionActual + " ";
         }
-        if(mapaDirecciones.get("east") != null) {
-            exitString += "east ";
-        }
-        if(mapaDirecciones.get("south") != null) {
-            exitString += "south ";
-        }
-        if(mapaDirecciones.get("west") != null) {
-            exitString += "west ";
-        }
-        if(mapaDirecciones.get("southEast") != null) {
-            exitString += "southEast ";
-        }
-        if(mapaDirecciones.get("northWest") != null) {
-            exitString += "northWest";
-        }
-        return exitString.trim();
+        
+        return descripcionDirecciones;
     }
 }
