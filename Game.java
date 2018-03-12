@@ -198,12 +198,9 @@ public class Game
      * Print out the location info.
      */
     private void printLocationInfo(){
-        System.out.println("Estas en " + currentRoom.getDescription());
+        System.out.println(currentRoom.getLongDescription());
         if (currentRoom.getDescription().equals("La terraza exterior, esta lloviendo")){
             System.out.println("Has encontrado y asesinado a tu victima. Felicidades!!");
-        }
-        else{
-            System.out.println(currentRoom.getExitString());
         }
         System.out.println();
     }
