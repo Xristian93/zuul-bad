@@ -52,28 +52,28 @@ public class Game
         // initialise room exits
         entradaEdificio.setExit("north", salonPrincipal);
         entradaEdificio.setExit("east", escaleras);
-        
+
         salonPrincipal.setExit("west", baños);
         salonPrincipal.setExit("northWest", trastero);
         salonPrincipal.setExit("south", entradaEdificio);
-        
+
         baños.setExit("east", salonPrincipal);
-        
+
         trastero.setExit("southEast", salonPrincipal);
-        
+
         escaleras.setExit("north", pasillo);
         escaleras.setExit("west", entradaEdificio);
         escaleras.setExit("southEast", sotano);
-        
+
         pasillo.setExit("north", dormitorioPrincipal);
         pasillo.setExit("south", escaleras);
-        
+
         dormitorioPrincipal.setExit("southEast", bañoDormitorio);
         dormitorioPrincipal.setExit("west", terraza);
         dormitorioPrincipal.setExit("northWest", armario);
-        
+
         terraza.setExit("east", dormitorioPrincipal);
-        
+
         armario.setExit("southEast", dormitorioPrincipal);
 
         currentRoom = entradaEdificio;  // start game outside
@@ -132,6 +132,9 @@ public class Game
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
+        }
+        else if (commandWord.equals("look")) {
+            look();
         }
 
         return wantToQuit;
@@ -203,5 +206,13 @@ public class Game
             System.out.println("Has encontrado y asesinado a tu victima. Felicidades!!");
         }
         System.out.println();
+    }
+
+    /**
+     * Print out a look of the actual location.
+     */
+    private void look() 
+    {
+        System.out.println(currentRoom.getLongDescription());
     }
 }
