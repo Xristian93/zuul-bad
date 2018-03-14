@@ -156,7 +156,7 @@ public class Game
         System.out.println("Estas dando vueltas por el edificio.");
         System.out.println();
         System.out.println("Tus comandos son:");
-        parser.showCommands();
+        System.out.println(parser.showCommands());
     }
 
     /** 
