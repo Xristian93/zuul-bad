@@ -37,17 +37,17 @@ public class Game
         Room entradaEdificio, salonPrincipal, baños, escaleras, pasillo, dormitorioPrincipal, terraza, bañoDormitorio, sotano, trastero, armario;
 
         // create the rooms
-        entradaEdificio = new Room("La entrada al viejo edificio");
-        salonPrincipal = new Room("Un gran salon, muy espacioso");
-        baños = new Room("Unos simples baños");
-        escaleras = new Room("Las escaleras al segundo piso");
-        pasillo = new Room("Un pasillo que comunica con las habitaciones");
-        dormitorioPrincipal = new Room("Un dormitorio muy grande");
-        terraza = new Room("La terraza exterior, esta lloviendo");
-        bañoDormitorio = new Room("El baño del dormitorio");
-        sotano = new Room("Un sotano oscuro y sucio");
-        trastero = new Room("Un simple trastero");
-        armario = new Room("Un armario lleno de ropa");
+        entradaEdificio = new Room("La entrada al viejo edificio", null);
+        salonPrincipal = new Room("Un gran salon, muy espacioso", new Item("Cofre de oro",500));
+        baños = new Room("Unos simples baños", null);
+        escaleras = new Room("Las escaleras al segundo piso", null);
+        pasillo = new Room("Un pasillo que comunica con las habitaciones", null);
+        dormitorioPrincipal = new Room("Un dormitorio muy grande", new Item("Candelabro de plata",300));
+        terraza = new Room("La terraza exterior, esta lloviendo", null);
+        bañoDormitorio = new Room("El baño del dormitorio", null);
+        sotano = new Room("Un sotano oscuro y sucio", new Item("Antorcha",100));
+        trastero = new Room("Un simple trastero", null);
+        armario = new Room("Un armario lleno de ropa", null);
 
         // initialise room exits
         entradaEdificio.setExit("north", salonPrincipal);
