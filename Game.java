@@ -156,7 +156,7 @@ public class Game
         System.out.println("Estas dando vueltas por el edificio.");
         System.out.println();
         System.out.println("Tus comandos son:");
-        System.out.println("   go quit help");
+        parser.showCommands();
     }
 
     /** 
@@ -218,7 +218,7 @@ public class Game
     {
         System.out.println(currentRoom.getLongDescription());
     }
-    
+
     /**
      * Eat some food
      */
