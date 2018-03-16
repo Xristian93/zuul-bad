@@ -88,9 +88,8 @@ public class Room
         String actualItem = "";
         if (arrayListItem.size() > 0){
             for (Item item : arrayListItem){
-                actualItem += item.getItem() + ".\n";
+                actualItem += item.getItems() + ".\n";
             }
- 
         }
         return "Estas en " + description + ".\n" + getExitString() + ".\n" + actualItem;
     }
@@ -100,5 +99,13 @@ public class Room
      */
     public void addItem(Item item){
         arrayListItem.add(item);
+    }
+    
+    /**
+     * Get the items of the room
+     * @return An array of the items in the room.
+     */
+    public ArrayList getItem(){
+       return arrayListItem;
     }
 }

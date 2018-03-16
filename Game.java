@@ -1,4 +1,5 @@
 import java.util.Stack;
+import java.util.ArrayList;
 
 /**
  *  This class is the main class of the "World of Zuul" application. 
@@ -22,6 +23,9 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private Stack<Room> roomStack;
+    private ArrayList<Item> bag;
+    private int bagWeigth;
+    private static final int MAX_WEIGTH = 1000;
 
     /**
      * Create the game and initialise its internal map.
@@ -31,6 +35,8 @@ public class Game
         createRooms();
         parser = new Parser();
         roomStack = new Stack<Room>();
+        bag = new ArrayList<Item>();
+        bagWeigth = 0;
     }
 
     /**
@@ -81,6 +87,7 @@ public class Game
         dormitorioPrincipal.setExit("southEast", bañoDormitorio);
         dormitorioPrincipal.setExit("west", terraza);
         dormitorioPrincipal.setExit("northWest", armario);
+        dormitorioPrincipal.setExit("south", pasillo);
 
         terraza.setExit("east", dormitorioPrincipal);
 
@@ -152,6 +159,15 @@ public class Game
         else if (commandWord.equals("back")) {
             back();
         }
+        else if (commandWord.equals("take")) {
+            take(command);
+        }
+        else if (commandWord.equals("drop")) {
+            drop(command);
+        }
+        else if (commandWord.equals("items")) {
+            items();
+        }
 
         return wantToQuit;
     }
@@ -186,7 +202,7 @@ public class Game
 
         String direction = command.getSecondWord();
         Room nextRoom = currentRoom.getExit(direction);
-        
+
         if (nextRoom == null) {
             System.out.println("No hay ninguna puerta!");
         }
@@ -253,6 +269,84 @@ public class Game
         }
         else{
             System.out.println("No puedes volver atras, estas en la posicion inicial");
+        }
+    }
+
+    /**
+     * Take an item into the bag choosing the item position
+     */
+    private void take(Command command) 
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know the item to take...
+            System.out.println("No has indicado la posicion del objeto a coger");
+            return;
+        }
+        ArrayList<Item> actualBag = null;
+        if (currentRoom.getItem().size() > 0){
+            actualBag = currentRoom.getItem();
+        }
+        String positionItemToTake = command.getSecondWord();
+
+        if (actualBag != null && bagWeigth + actualBag.get(Integer.parseInt(positionItemToTake)).getItemWeigth() < MAX_WEIGTH){
+            System.out.println("Has cogido el siguiente objeto:" + "\n");
+            System.out.println("Posicion: " + Integer.parseInt(positionItemToTake) + " " 
+                + actualBag.get(Integer.parseInt(positionItemToTake)).getItems());
+            bagWeigth += actualBag.get(Integer.parseInt(positionItemToTake)).getItemWeigth();
+            bag.add(actualBag.get(Integer.parseInt(positionItemToTake)));
+            actualBag.remove(Integer.parseInt(positionItemToTake));
+        }
+
+        else{
+            if (actualBag == null){
+                System.out.println("No hay objetos en la habitacion");
+            }
+            else{
+                System.out.println("Te has pasado del peso de la mochila");
+            }
+        }
+    }
+
+    /**
+     * Drop an item into the actual room
+     */
+    private void drop(Command command) 
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know the item to take...
+            System.out.println("No has indicado la posicion del objeto a dejar");
+            return;
+        }
+
+        ArrayList<Item> actualBag = currentRoom.getItem();
+        String positionItemToDrop = command.getSecondWord();
+
+        if (bag.size() > 0){
+            System.out.println("Has dejado el siguiente objeto:" + "\n");
+            System.out.println("Posicion: " + Integer.parseInt(positionItemToDrop) + " " 
+                + bag.get(Integer.parseInt(positionItemToDrop)).getItems());
+            bagWeigth -= bag.get(Integer.parseInt(positionItemToDrop)).getItemWeigth();
+            actualBag.add(bag.get(Integer.parseInt(positionItemToDrop)));
+            bag.remove(Integer.parseInt(positionItemToDrop));
+        }
+        else{
+            System.out.println("La mochila esta vacia");
+        }
+    }
+
+    /**
+     * Show information about the player objets
+     */
+    private void items() 
+    {
+        if (bag.size() > 0){
+            System.out.println("Tu mochila tiene los siguientes objetos");
+            for (int i = 0; i < bag.size(); i++){
+                System.out.println(bag.get(i).getItems());
+            }
+        }
+        else{
+            System.out.println("Tu mochila esta vacia");
         }
     }
 }

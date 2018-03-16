@@ -25,8 +25,18 @@ public class Item
      *
      * @return    the Item description and weigth
      */
-    public String getItem()
+    public String getItems()
     {
         return description + " " + weigth + " gramos";
+    }
+    
+    /**
+     * Return the Item weigth
+     *
+     * @return    the Item weigth
+     */
+    public int getItemWeigth()
+    {
+        return weigth;
     }
 }
