@@ -19,6 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Room lastRoom;
 
     /**
      * Create the game and initialise its internal map.
@@ -27,6 +28,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        lastRoom = null;
     }
 
     /**
@@ -145,6 +147,9 @@ public class Game
         else if (commandWord.equals("eat")) {
             eat();
         }
+        else if (commandWord.equals("back")) {
+            back();
+        }
 
         return wantToQuit;
     }
@@ -171,6 +176,8 @@ public class Game
      */
     private void goRoom(Command command) 
     {
+        lastRoom = currentRoom;
+        
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("Go where?");
@@ -231,5 +238,17 @@ public class Game
     private void eat() 
     {
         System.out.println("You have eaten now and you are not hungry any more");
+    }
+    
+    /** 
+     * Intenta ir a la anterior habitacion. El jugador no debe cambiar de localización si este comando
+     * se invoca al inicio o si se invoca dos o más veces seguidas sin haber ejecutado el comando go entre ellas.
+     */
+    private void back() 
+    {
+        if (lastRoom != null){
+            currentRoom = lastRoom;
+            printLocationInfo();
+        }
     }
 }
