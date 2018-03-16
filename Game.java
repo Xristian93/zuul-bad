@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,7 +21,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    private Room lastRoom;
+    private Stack<Room> roomStack;
 
     /**
      * Create the game and initialise its internal map.
@@ -28,7 +30,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        lastRoom = null;
+        roomStack = new Stack<Room>();
     }
 
     /**
@@ -56,7 +58,7 @@ public class Game
         salonPrincipal.addItem(new Item("Cofre de cobre",700));
         dormitorioPrincipal.addItem(new Item("Candelabro de plata",300));
         sotano.addItem(new Item("Antorcha",100));
-        
+
         // initialise room exits
         entradaEdificio.setExit("north", salonPrincipal);
         entradaEdificio.setExit("east", escaleras);
@@ -176,8 +178,6 @@ public class Game
      */
     private void goRoom(Command command) 
     {
-        lastRoom = currentRoom;
-        
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("Go where?");
@@ -185,6 +185,7 @@ public class Game
         }
 
         String direction = command.getSecondWord();
+        roomStack.push(currentRoom);
 
         // Try to leave current room.
         currentRoom = currentRoom.getExit(direction);
@@ -239,16 +240,19 @@ public class Game
     {
         System.out.println("You have eaten now and you are not hungry any more");
     }
-    
+
     /** 
      * Intenta ir a la anterior habitacion. El jugador no debe cambiar de localización si este comando
      * se invoca al inicio o si se invoca dos o más veces seguidas sin haber ejecutado el comando go entre ellas.
      */
     private void back() 
     {
-        if (lastRoom != null){
-            currentRoom = lastRoom;
+        if (!roomStack.empty()){
+            currentRoom = roomStack.pop();
             printLocationInfo();
+        }
+        else{
+            System.out.println("No puedes volver atras, estas en la posicion inicial");
         }
     }
 }
