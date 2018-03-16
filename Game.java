@@ -185,15 +185,15 @@ public class Game
         }
 
         String direction = command.getSecondWord();
-        roomStack.push(currentRoom);
-
-        // Try to leave current room.
-        currentRoom = currentRoom.getExit(direction);
-
-        if (currentRoom == null) {
+        Room nextRoom = currentRoom.getExit(direction);
+        
+        if (nextRoom == null) {
             System.out.println("No hay ninguna puerta!");
         }
         else {
+            roomStack.push(currentRoom);
+            // Try to leave current room.
+            currentRoom = currentRoom.getExit(direction);
             printLocationInfo();
         }
     }
