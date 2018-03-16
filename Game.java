@@ -274,6 +274,7 @@ public class Game
 
     /**
      * Take an item into the bag choosing the item position
+     * @param command The position of the item to take
      */
     private void take(Command command) 
     {
@@ -309,6 +310,7 @@ public class Game
 
     /**
      * Drop an item into the actual room
+     * @param command The position of the item to drop
      */
     private void drop(Command command) 
     {
