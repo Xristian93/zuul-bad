@@ -90,7 +90,6 @@ public class Room
             for (Item item : arrayListItem){
                 actualItem += item.getItem() + ".\n";
             }
- 
         }
         return "Estas en " + description + ".\n" + getExitString() + ".\n" + actualItem;
     }

@@ -20,26 +20,25 @@ import java.util.Stack;
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
-    private Stack<Room> roomStack;
+    private Player player;
 
     /**
      * Create the game and initialise its internal map.
      */
     public Game() 
     {
-        createRooms();
+        player = new Player();
+        player.setCurrentRoom(createRooms());
         parser = new Parser();
-        roomStack = new Stack<Room>();
     }
 
     /**
      * Create all the rooms and link their exits together.
      */
-    private void createRooms()
+    private Room createRooms()
     {
         Room entradaEdificio, salonPrincipal, baños, escaleras, pasillo, dormitorioPrincipal, terraza, bañoDormitorio, sotano, trastero, armario;
-
+        
         // create the rooms
         entradaEdificio = new Room("La entrada al viejo edificio");
         salonPrincipal = new Room("Un gran salon, muy espacioso");
@@ -54,10 +53,10 @@ public class Game
         armario = new Room("Un armario lleno de ropa");
 
         // create the room items
-        salonPrincipal.addItem(new Item("Cofre de oro",500));
-        salonPrincipal.addItem(new Item("Cofre de cobre",700));
-        dormitorioPrincipal.addItem(new Item("Candelabro de plata",300));
-        sotano.addItem(new Item("Antorcha",100));
+        salonPrincipal.addItem(new Item("Cofre de oro", 500, "CofreOro", true));
+        salonPrincipal.addItem(new Item("Cofre de cobre", 700, "CofreCobre", true));
+        dormitorioPrincipal.addItem(new Item("Candelabro de plata", 300, "CofrePlata", true));
+        sotano.addItem(new Item("Una antorcha encendida", 100, "Antorcha", true));
 
         // initialise room exits
         entradaEdificio.setExit("north", salonPrincipal);
@@ -85,8 +84,9 @@ public class Game
         terraza.setExit("east", dormitorioPrincipal);
 
         armario.setExit("southEast", dormitorioPrincipal);
-
-        currentRoom = entradaEdificio;  // start game outside
+        
+        // return the player current room
+        return entradaEdificio;
     }
 
     /**
@@ -116,7 +116,7 @@ public class Game
         System.out.println("Bienvenido al edificio de tu nuevo trabajo, ¿Preparado para dar caza a tu victima?");
         System.out.println("Escribe 'help' si necesitas ayuda");
         System.out.println();
-        printLocationInfo();
+        player.look();
     }
 
     /**
@@ -138,21 +138,20 @@ public class Game
             printHelp();
         }
         else if (commandWord.equals("go")) {
-            goRoom(command);
+            player.goRoom(command);
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
         else if (commandWord.equals("look")) {
-            look();
+            player.look();
         }
         else if (commandWord.equals("eat")) {
-            eat();
+            player.eat();
         }
         else if (commandWord.equals("back")) {
-            back();
+            player.back();
         }
-
         return wantToQuit;
     }
 
@@ -173,32 +172,6 @@ public class Game
     }
 
     /** 
-     * Try to go in one direction. If there is an exit, enter
-     * the new room, otherwise print an error message.
-     */
-    private void goRoom(Command command) 
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-        Room nextRoom = currentRoom.getExit(direction);
-        
-        if (nextRoom == null) {
-            System.out.println("No hay ninguna puerta!");
-        }
-        else {
-            roomStack.push(currentRoom);
-            // Try to leave current room.
-            currentRoom = currentRoom.getExit(direction);
-            printLocationInfo();
-        }
-    }
-
-    /** 
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.
      * @return true, if this command quits the game, false otherwise.
@@ -211,48 +184,6 @@ public class Game
         }
         else {
             return true;  // signal that we want to quit
-        }
-    }
-
-    /**
-     * Print out the location info.
-     */
-    private void printLocationInfo(){
-        System.out.println(currentRoom.getLongDescription());
-        if (currentRoom.getDescription().equals("La terraza exterior, esta lloviendo")){
-            System.out.println("Has encontrado y asesinado a tu victima. Felicidades!!");
-        }
-        System.out.println();
-    }
-
-    /**
-     * Print out a look of the actual location.
-     */
-    private void look() 
-    {
-        System.out.println(currentRoom.getLongDescription());
-    }
-
-    /**
-     * Eat some food
-     */
-    private void eat() 
-    {
-        System.out.println("You have eaten now and you are not hungry any more");
-    }
-
-    /** 
-     * Intenta ir a la anterior habitacion. El jugador no debe cambiar de localización si este comando
-     * se invoca al inicio o si se invoca dos o más veces seguidas sin haber ejecutado el comando go entre ellas.
-     */
-    private void back() 
-    {
-        if (!roomStack.empty()){
-            currentRoom = roomStack.pop();
-            printLocationInfo();
-        }
-        else{
-            System.out.println("No puedes volver atras, estas en la posicion inicial");
         }
     }
 }
