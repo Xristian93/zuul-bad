@@ -11,17 +11,17 @@ public class Item
     private String description;
     private int weigth;
     private String id;
-    private boolean canBePickedUp;
+    private boolean canBePicked;
 
     /**
      * Constructor for objects of class Item
      */
-    public Item(String description, int weigth, String id, boolean canBePickedUp)
+    public Item(String description, int weigth, String id, boolean canBePicked)
     {
         this.description = description;
         this.weigth = weigth;
         this.id = id;
-        this.canBePickedUp = canBePickedUp;
+        this.canBePicked = canBePicked;
     }
 
     /**
