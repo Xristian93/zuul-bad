@@ -152,6 +152,15 @@ public class Game
         else if (commandWord.equals("back")) {
             player.back();
         }
+        else if (commandWord.equals("take")) {
+            player.take(command);
+        }
+        else if (commandWord.equals("items")) {
+            player.items();
+        }
+        else if (commandWord.equals("drop")) {
+            player.drop(command);
+        }
         return wantToQuit;
     }
 

@@ -70,14 +70,14 @@ public class Room
     public String getExitString(){
         Set<String> direcciones = mapaDirecciones.keySet();
         String descripcionDirecciones = "Salidas: ";
-        
+
         for (String direccionActual : direcciones){
             descripcionDirecciones += direccionActual + " ";
         }
-        
+
         return descripcionDirecciones;
     }
-    
+
     /**
      * Return a long description of this room, of the form:
      *      You are in the "name of room"
@@ -93,11 +93,36 @@ public class Room
         }
         return "Estas en " + description + ".\n" + getExitString() + ".\n" + actualItem;
     }
-    
+
     /**
      * Add an Item to the room
      */
     public void addItem(Item item){
         arrayListItem.add(item);
+    }
+
+    /**
+     * Get an item from the room
+     * @return An item in the room
+     */
+    public Item getItem(String id){
+        boolean buscando = true;
+        int position = 0;
+        Item itemToReturn = null;
+        while (buscando && arrayListItem.size() > position){
+            if (arrayListItem.get(position).getItemId().equals(id)){
+                itemToReturn = arrayListItem.get(position);
+                buscando = false;
+            }
+            position++;
+        }
+        return itemToReturn;
+    }
+    
+    /**
+     * Remove an item from the room
+     */
+    public void removeItem(Item item){
+        arrayListItem.remove(item);
     }
 }
