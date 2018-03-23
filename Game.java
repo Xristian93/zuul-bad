@@ -152,6 +152,9 @@ public class Game
         else if (commandWord.equals("back")) {
             player.back();
         }
+        else if (commandWord.equals("take")) {
+            player.take(command);
+        }
         return wantToQuit;
     }
 

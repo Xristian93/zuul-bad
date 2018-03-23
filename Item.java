@@ -25,12 +25,32 @@ public class Item
     }
 
     /**
-     * Return the Item description and the Item weigth
+     * Return the Item description, the Item weigth and the Item id
      *
-     * @return    the Item description and weigth
+     * @return    the Item description, weigth and id
      */
     public String getItem()
     {
         return description + " " + weigth + " gramos" + " // ID: " + id;
+    }
+    
+    /**
+     * Return the Item weigth
+     *
+     * @return    the Item weigth
+     */
+    public int getWeigth()
+    {
+        return weigth;
+    }
+    
+    /**
+     * Return the Item ID
+     *
+     * @return    the Item ID
+     */
+    public String getItemId()
+    {
+        return id;
     }
 }

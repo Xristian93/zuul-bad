@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Stack;
 
+
 /**
  * This class simulate a player in the game
  *
@@ -12,6 +13,9 @@ public class Player
     // instance variables - replace the example below with your own
     private Room currentRoom;
     private Stack<Room> roomStack;
+    private ArrayList<Item> bag;
+    private int bagWeigth;
+    private static final int MAX_WEIGTH = 1000;
 
     /**
      * Constructor for objects of class Player
@@ -21,6 +25,8 @@ public class Player
         // initialise instance variables
         currentRoom = null;
         roomStack = new Stack<Room>();
+        bag = new ArrayList<>();
+        bagWeigth = 0;
     }
     
     public void setCurrentRoom(Room room){
@@ -85,5 +91,36 @@ public class Player
     public void eat() 
     {
         System.out.println("You have eaten now and you are not hungry any more");
+    }
+    
+    /**
+     * Take an item into the bag choosing the item id
+     */
+    public void take(Command command) 
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know the item to take...
+            System.out.println("No has indicado el ID del objeto a coger");
+            return;
+        }
+        String positionItem = command.getSecondWord();
+        Item itemToTake = currentRoom.getItem(positionItem);
+
+        if (itemToTake != null && bagWeigth + itemToTake.getWeigth() < MAX_WEIGTH){
+            System.out.println("Has cogido el siguiente objeto:" + "\n");
+            System.out.println(itemToTake.getItem());
+            bagWeigth += itemToTake.getWeigth();
+            bag.add(itemToTake);
+            currentRoom.removeItem(itemToTake);
+        }
+
+        else{
+            if (itemToTake == null){
+                System.out.println("No hay objetos en la habitacion");
+            }
+            else{
+                System.out.println("Te has pasado del peso de la mochila");
+            }
+        }
     }
 }
