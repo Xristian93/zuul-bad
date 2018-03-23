@@ -14,7 +14,7 @@ public class Player
     private Stack<Room> roomStack;
     private ArrayList<Item> bag;
     private int bagWeigth;
-    private static final int MAX_WEIGTH = 1000;
+    private static final int MAX_WEIGTH = 950;
 
     /**
      * Constructor for objects of class Player
