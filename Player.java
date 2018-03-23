@@ -102,8 +102,8 @@ public class Player
             System.out.println("No has indicado el ID del objeto a coger");
             return;
         }
-        String positionItem = command.getSecondWord();
-        Item itemToTake = currentRoom.getItem(positionItem);
+        String itemID = command.getSecondWord();
+        Item itemToTake = currentRoom.getItem(itemID);
 
         if (itemToTake != null && bagWeigth + itemToTake.getWeigth() < MAX_WEIGTH){
             System.out.println("Has cogido el siguiente objeto:" + "\n");
@@ -136,6 +136,38 @@ public class Player
         }
         else{
             System.out.println("Tu mochila esta vacia");
+        }
+    }
+    
+    /**
+     * Drop an item into the room choosing the item id
+     */
+    public void drop(Command command) 
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know the item to take...
+            System.out.println("No has indicado el ID del objeto a dejar");
+            return;
+        }
+        String itemID = command.getSecondWord();
+        Item itemToDrop = null;
+        int cont = 0;
+        while (itemToDrop == null && bag.size() > cont){
+            if (bag.get(cont).getItemId().equals(itemID)){
+                itemToDrop = bag.get(cont);
+            }
+            cont++;
+        }
+        
+        if (bag.size() > 0 && itemToDrop != null){
+            System.out.println("Has dejado el siguiente objeto:" + "\n");
+            System.out.println(itemToDrop.getItem());
+            bagWeigth -= itemToDrop.getWeigth();
+            bag.remove(itemToDrop);
+            currentRoom.addItem(itemToDrop);
+        }
+        else{
+            System.out.println("No hay objetos en la mochila para dejar");
         }
     }
 }
