@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Stack;
 
-
 /**
  * This class simulate a player in the game
  *
@@ -28,11 +27,11 @@ public class Player
         bag = new ArrayList<>();
         bagWeigth = 0;
     }
-    
+
     public void setCurrentRoom(Room room){
         currentRoom = room;
     }
-    
+
     /** 
      * Try to go in one direction. If there is an exit, enter
      * the new room, otherwise print an error message.
@@ -47,7 +46,7 @@ public class Player
 
         String direction = command.getSecondWord();
         Room nextRoom = currentRoom.getExit(direction);
-        
+
         if (nextRoom == null) {
             System.out.println("No hay ninguna puerta!");
         }
@@ -58,7 +57,7 @@ public class Player
             look();
         }
     }
-    
+
     /**
      * Print out a look of the actual location.
      */
@@ -69,7 +68,7 @@ public class Player
             System.out.println("Has encontrado y asesinado a tu victima. Felicidades!!");
         }
     }
-    
+
     /** 
      * Intenta ir a la anterior habitacion. El jugador no debe cambiar de localización si este comando
      * se invoca al inicio o si se invoca dos o más veces seguidas sin haber ejecutado el comando go entre ellas.
@@ -84,7 +83,7 @@ public class Player
             System.out.println("No puedes volver atras, estas en la posicion inicial");
         }
     }
-    
+
     /**
      * Eat some food
      */
@@ -92,7 +91,7 @@ public class Player
     {
         System.out.println("You have eaten now and you are not hungry any more");
     }
-    
+
     /**
      * Take an item into the bag choosing the item id
      */
@@ -121,6 +120,22 @@ public class Player
             else{
                 System.out.println("Te has pasado del peso de la mochila");
             }
+        }
+    }
+
+    /**
+     * Show information about the player objets
+     */
+    public void items() 
+    {
+        if (bag.size() > 0){
+            System.out.println("Tu mochila tiene los siguientes objetos");
+            for (int i = 0; i < bag.size(); i++){
+                System.out.println(bag.get(i).getItem());
+            }
+        }
+        else{
+            System.out.println("Tu mochila esta vacia");
         }
     }
 }
