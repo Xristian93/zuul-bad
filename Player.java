@@ -105,7 +105,7 @@ public class Player
         String itemID = command.getSecondWord();
         Item itemToTake = currentRoom.getItem(itemID);
 
-        if (itemToTake != null && bagWeigth + itemToTake.getWeigth() < MAX_WEIGTH){
+        if (itemToTake != null && bagWeigth + itemToTake.getWeigth() < MAX_WEIGTH && itemToTake.getCanBePicked() == true){
             System.out.println("Has cogido el siguiente objeto:" + "\n");
             System.out.println(itemToTake.getItem());
             bagWeigth += itemToTake.getWeigth();
@@ -138,7 +138,7 @@ public class Player
             System.out.println("Tu mochila esta vacia");
         }
     }
-    
+
     /**
      * Drop an item into the room choosing the item id
      */
@@ -158,7 +158,7 @@ public class Player
             }
             cont++;
         }
-        
+
         if (bag.size() > 0 && itemToDrop != null){
             System.out.println("Has dejado el siguiente objeto:" + "\n");
             System.out.println(itemToDrop.getItem());
@@ -170,4 +170,25 @@ public class Player
             System.out.println("No hay objetos en la mochila para dejar");
         }
     }
+
+    /**
+     * Try to use a phone
+     */
+    public void callPhone(Command command){
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know the item to take...
+            System.out.println("No has indicado el ID del objeto");
+            return;
+        }
+        String itemID = command.getSecondWord();
+        Item itemToCompare = currentRoom.getItem(itemID);
+        if (itemToCompare.getItemId().equals("Telefono")){
+            System.out.println("Has llamado al numero marcado en el telefono y lo ha cogido tu victima");
+            System.out.println("Hablando con ella has descubierto que esta en la terraza exterior");
+        }
+        else{
+            System.out.println("No hay un telefono en la habitacion");
+        }
+    }
+
 }
