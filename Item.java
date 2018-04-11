@@ -53,4 +53,14 @@ public class Item
     {
         return id;
     }
+    
+    /**
+     * Return if the object can be picked
+     *
+     * @return    the Item canBePickep
+     */
+    public boolean getCanBePicked()
+    {
+        return canBePicked;
+    }
 }

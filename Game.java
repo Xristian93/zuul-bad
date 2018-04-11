@@ -57,6 +57,7 @@ public class Game
         salonPrincipal.addItem(new Item("Cofre de cobre", 700, "CofreCobre", true));
         dormitorioPrincipal.addItem(new Item("Candelabro de plata", 300, "CofrePlata", true));
         sotano.addItem(new Item("Una antorcha encendida", 100, "Antorcha", true));
+        baños.addItem(new Item("Un telefono con un numero marcado", 50, "Telefono", true));
 
         // initialise room exits
         entradaEdificio.setExit("north", salonPrincipal);
@@ -160,6 +161,9 @@ public class Game
         }
         else if (commandWord.equals("drop")) {
             player.drop(command);
+        }
+        else if (commandWord.equals("callPhone")) {
+            player.callPhone(command);
         }
         return wantToQuit;
     }
