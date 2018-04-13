@@ -38,7 +38,7 @@ public class Game
     private Room createRooms()
     {
         Room entradaEdificio, salonPrincipal, baños, escaleras, pasillo, dormitorioPrincipal, terraza, bañoDormitorio, sotano, trastero, armario;
-        
+
         // create the rooms
         entradaEdificio = new Room("La entrada al viejo edificio");
         salonPrincipal = new Room("Un gran salon, muy espacioso");
@@ -85,7 +85,7 @@ public class Game
         terraza.setExit("east", dormitorioPrincipal);
 
         armario.setExit("southEast", dormitorioPrincipal);
-        
+
         // return the player current room
         return entradaEdificio;
     }
@@ -129,41 +129,41 @@ public class Game
     {
         boolean wantToQuit = false;
 
-        if(command.isUnknown()) {
+        CommandWord commandWord = command.getCommandWord();
+        switch (commandWord) {
+            case UNKNOWN:
             System.out.println("I don't know what you mean...");
-            return false;
-        }
-
-        String commandWord = command.getCommandWord();
-        if (commandWord.equals("help")) {
+            break;
+            case HELP:
             printHelp();
-        }
-        else if (commandWord.equals("go")) {
+            break;
+            case GO:
             player.goRoom(command);
-        }
-        else if (commandWord.equals("quit")) {
+            break;
+            case QUIT:
             wantToQuit = quit(command);
-        }
-        else if (commandWord.equals("look")) {
+            break;
+            case LOOK:
             player.look();
-        }
-        else if (commandWord.equals("eat")) {
+            break;
+            case EAT:
             player.eat();
-        }
-        else if (commandWord.equals("back")) {
+            break;
+            case BACK:
             player.back();
-        }
-        else if (commandWord.equals("take")) {
+            break;
+            case TAKE:
             player.take(command);
-        }
-        else if (commandWord.equals("items")) {
+            break;
+            case ITEMS:
             player.items();
-        }
-        else if (commandWord.equals("drop")) {
+            break;
+            case DROP:
             player.drop(command);
-        }
-        else if (commandWord.equals("callPhone")) {
+            break;
+            case CALLPHONE:
             player.callPhone(command);
+            break;
         }
         return wantToQuit;
     }

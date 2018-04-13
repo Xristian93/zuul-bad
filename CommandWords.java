@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  * This class is part of the "World of Zuul" application. 
  * "World of Zuul" is a very simple, text based adventure game.  
@@ -12,16 +14,25 @@
 public class CommandWords
 {
     // a constant array that holds all valid command words
-    private static final String[] validCommands = {
-            "go", "quit", "help", "look", "eat", "back", "take", "items", "drop", "callPhone"
-        };
+    private HashMap<String, CommandWord> validCommands;
 
     /**
      * Constructor - initialise the command words.
      */
     public CommandWords()
     {
-        // nothing to do at the moment...
+        validCommands = new HashMap<>();
+        validCommands.put("go", CommandWord.GO);
+        validCommands.put("help", CommandWord.HELP);
+        validCommands.put("quit", CommandWord.QUIT);
+        validCommands.put("look", CommandWord.LOOK);
+        validCommands.put("eat", CommandWord.EAT);
+        validCommands.put("back", CommandWord.BACK);
+        validCommands.put("take", CommandWord.TAKE);
+        validCommands.put("drop", CommandWord.DROP);
+        validCommands.put("items", CommandWord.ITEMS);
+        validCommands.put("callPhone", CommandWord.CALLPHONE);
+        validCommands.put("", CommandWord.UNKNOWN);
     }
 
     /**
@@ -31,12 +42,7 @@ public class CommandWords
      */
     public boolean isCommand(String aString)
     {
-        for(int i = 0; i < validCommands.length; i++) {
-            if(validCommands[i].equals(aString))
-                return true;
-        }
-        // if we get here, the string was not found in the commands
-        return false;
+        return validCommands.keySet().contains(aString);
     }
 
     /**
@@ -45,8 +51,22 @@ public class CommandWords
     public String getCommandList()
     {
         String aDevolver = "";
-        for (String command : validCommands) {
+        for (String command : validCommands.keySet()) {
             aDevolver += command + " ";
+        }
+        return aDevolver;
+    }
+
+    /**
+     * Return the CommandWord associated with a word.
+     * @param commandWord The word to look up (as a string).
+     * @return The CommandWord corresponding to the String commandWord, or UNKNOWN
+     *         if it is not a valid command word.
+     */
+    public CommandWord getCommandWord(String commandWord){
+        CommandWord aDevolver = CommandWord.UNKNOWN;
+        if (validCommands.keySet().contains(commandWord)){
+            aDevolver = validCommands.get(commandWord);
         }
         return aDevolver;
     }
